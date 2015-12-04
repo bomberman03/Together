@@ -1,22 +1,31 @@
 package mobileprogramming.koreatech.together;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -31,10 +40,16 @@ public class MainActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
 
+    private FrameLayout frameLayout;
+    private LinearLayout main_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        frameLayout = (FrameLayout) findViewById(R.id.container);
+        frameLayout.setBackgroundColor(Color.WHITE);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -44,6 +59,34 @@ public class MainActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
+
+        ArrayList<FeedView> feedViews = new ArrayList<>();
+        feedViews.add(new FeedView(this, "피드백입니다."));
+        feedViews.add(new FeedView(this, "피드백입니다."));
+        feedViews.add(new FeedView(this, "피드백입니다."));
+        feedViews.add(new FeedView(this, "피드백입니다."));
+        feedViews.add(new FeedView(this, "피드백입니다."));
+        feedViews.add(new FeedView(this, "피드백입니다."));
+
+        ArrayList<TaskView> taskViews = new ArrayList<>();
+        taskViews.add(new TaskView(this, "테스크입니다.", 1, feedViews));
+        taskViews.add(new TaskView(this, "테스크입니다.", 10));
+        taskViews.add(new TaskView(this, "테스크입니다.", 2));
+        taskViews.add(new TaskView(this, "테스크입니다.", 3));
+        taskViews.add(new TaskView(this, "테스크입니다.", 5, feedViews));
+        taskViews.add(new TaskView(this, "테스크입니다.", 3));
+
+        ProjectView projectView = new ProjectView(this, "Mobile Project", taskViews);
+        main_layout.addView(projectView.getLayout(main_layout));
+
+        projectView = new ProjectView(this, "DBP Project", taskViews);
+        main_layout.addView(projectView.getLayout(main_layout));
+
+        projectView = new ProjectView(this, "HRD Project", taskViews);
+        main_layout.addView(projectView.getLayout(main_layout));
+
     }
 
     @Override
@@ -74,19 +117,28 @@ public class MainActivity extends AppCompatActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources()
+                .getColor(R.color.action_bar_bg)));
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
+            MenuItem item = menu.findItem(R.id.action_notifications);
+            LayerDrawable icon = (LayerDrawable) item.getIcon();
+
+            // Update LayerDrawable's BadgeDrawable
+            Utils2.setBadgeCount(this, icon, 2);
             restoreActionBar();
             return true;
         }
+
+
         return super.onCreateOptionsMenu(menu);
     }
 

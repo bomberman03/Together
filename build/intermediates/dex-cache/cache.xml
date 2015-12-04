@@ -2,32 +2,39 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\GgH\Documents\Together\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="C:\Users\GgH\Documents\Together\app\build\intermediates\pre-dexed\debug\classes-d117ad435d8429b07693239bb9332348088af12d.jar" />
-    </item>
-    <item
-        jar="C:\Users\GgH\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
-        <dex dex="C:\Users\GgH\Documents\Together\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-d00c4da2f4c9bc4015307e8066cef3032fefcef0.jar" />
-    </item>
-    <item
-        jar="C:\Users\GgH\Documents\Together\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="C:\Users\GgH\Documents\Together\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-0c0e972d56ea78caa3e53fbb2c85ac14f47c0caf.jar" />
-    </item>
-    <item
-        jar="C:\Users\GgH\Documents\Together\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
+        jar="C:\Users\user\Documents\Together\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
-        <dex dex="C:\Users\GgH\Documents\Together\app\build\intermediates\pre-dexed\debug\classes-fe6e1ccbd50602d39e8fd949ce78db1cfdeeea1f.jar" />
+        <dex dex="C:\Users\user\Documents\Together\app\build\intermediates\pre-dexed\debug\classes-920ff3943e6cf825027562308adf239c5726fd2a.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\Documents\Together\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
+        <dex dex="C:\Users\user\Documents\Together\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-819674bebfd70ff3844d2e615143b194fd3f372b.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="C:\Users\user\Documents\Together\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-663270283fa374e7034b14be5a187e68c8881c63.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\Documents\Together\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="C:\Users\user\Documents\Together\app\build\intermediates\pre-dexed\debug\classes-1879538d84524da3f36a4a74d8a43be8e16083ad.jar" />
+    </item>
+    <item
+        jar="C:\Users\user\Documents\Together\app\build\intermediates\exploded-aar\com.github.dmytrodanylyk.shadow-layout\library\1.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1c60de8bde1c6418e32a952b669df6975ff6fdca">
+        <dex dex="C:\Users\user\Documents\Together\app\build\intermediates\pre-dexed\debug\classes-dd40a24cc271a00732b508917c0c8796c38856e4.jar" />
     </item>
 
 </items>

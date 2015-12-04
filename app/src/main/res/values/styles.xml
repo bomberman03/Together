@@ -3,6 +3,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="homeAsUpIndicator">@drawable/ic_drawer</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_drawer</item>
     </style>
+
+    <color name="action_bar_bg">#2e75b6</color>
+    <color name="intro_bg">#9dc3e6</color>
+    <color name="button_bg">#2e75b6</color>
+    <color name="button_press_bg">#1d64a5</color>
+    <color name="white">#ffffff</color>
 
 </resources>
