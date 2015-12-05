@@ -1,4 +1,4 @@
-package mobileprogramming.koreatech.together;
+package mobileprogramming.koreatech.together.Dialog;
 
 import android.app.Application;
 import android.app.Dialog;
@@ -12,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import mobileprogramming.koreatech.together.R;
 
 /**
  * Created by user on 2015-11-26.

@@ -1,4 +1,4 @@
-package mobileprogramming.koreatech.together;
+package mobileprogramming.koreatech.together.View;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import mobileprogramming.koreatech.together.R;
 
 /**
  * Created by user on 2015-11-30.
@@ -30,7 +32,6 @@ public class FeedView {
 
         TextView feed_content = (TextView) res_layout.findViewById(R.id.feed_content);
         feed_content.setText(this.feed_content);
-        Log.d("TAG", "feed_content : " + this.feed_content);
 
         return res_layout;
     }

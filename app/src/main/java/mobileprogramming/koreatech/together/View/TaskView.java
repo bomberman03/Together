@@ -1,7 +1,6 @@
-package mobileprogramming.koreatech.together;
+package mobileprogramming.koreatech.together.View;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import mobileprogramming.koreatech.together.Activity.MainActivity;
+import mobileprogramming.koreatech.together.R;
 
 /**
  * Created by user on 2015-11-30.
@@ -41,6 +43,14 @@ public class TaskView {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public void showFeed(){
+
+    }
+
+    public void hideFeed(){
+
+    }
+
     public LinearLayout getLayout(ViewGroup parent){
         final LinearLayout res_layout = (LinearLayout) layoutInflater.inflate(R.layout.task_layout, parent, false);
 
@@ -49,18 +59,18 @@ public class TaskView {
         TextView dueDay_text = (TextView) res_layout.findViewById(R.id.dueDay_text);
         dueDay_text.setText("D-" + dueDay);
 
-        LinearLayout task_layout = (LinearLayout) res_layout.findViewById(R.id.task_layout);
+        final LinearLayout task_layout = (LinearLayout) res_layout.findViewById(R.id.task_layout);
         task_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) context;
                 LinearLayout feed_layout = (LinearLayout) res_layout.findViewById(R.id.feed_layout);
-                boolean isExpand = feed_layout.getChildCount() > 0;
-                feed_layout.removeAllViews();
-                if (!isExpand) {
+
+                if (!mainActivity.hideInsertLayout(res_layout)) {
+                    mainActivity.showInsertLayout(res_layout);
                     for (FeedView feedView : feedViews) {
                         feed_layout.addView(feedView.getLayout(feed_layout));
                     }
-                    feed_layout.addView(getInsertLayout(feed_layout));
                 }
             }
         });

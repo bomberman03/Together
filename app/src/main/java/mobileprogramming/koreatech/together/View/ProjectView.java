@@ -1,4 +1,4 @@
-package mobileprogramming.koreatech.together;
+package mobileprogramming.koreatech.together.View;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import mobileprogramming.koreatech.together.R;
 
 /**
  * Created by user on 2015-11-30.

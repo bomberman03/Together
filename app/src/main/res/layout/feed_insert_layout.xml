@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/action_bar_bg">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginBottom="5dp">
+        android:layout_margin="10dp">
 
         <EditText
             android:layout_width="match_parent"
@@ -17,7 +18,8 @@
             android:hint="피드백을 해주세요"
             android:layout_marginTop="5dp"
             android:background="@drawable/rounded_edit_text"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginRight="5dp" />
 
         <ImageView
             android:layout_width="30dp"

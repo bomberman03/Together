@@ -1,4 +1,4 @@
-package mobileprogramming.koreatech.together;
+package mobileprogramming.koreatech.together.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import mobileprogramming.koreatech.together.Dialog.SignUpDialog;
+import mobileprogramming.koreatech.together.R;
 
 public class LoginActivity extends Activity implements View.OnClickListener{
     private Button button_sign_in;
