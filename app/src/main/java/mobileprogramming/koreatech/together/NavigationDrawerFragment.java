@@ -26,6 +26,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import mobileprogramming.koreatech.together.View.ProfileView;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -96,6 +98,12 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         mDrawerListView = (RelativeLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+
+        ProfileView profileView = new ProfileView(getContext(), "컴퓨터공학부", "정재현", "");
+
+        LinearLayout profile_layout = (LinearLayout) mDrawerListView.findViewById(R.id.profile_layout);
+
+        profile_layout.addView(profileView.getLayout(profile_layout));
 
         project_list = (LinearLayout) mDrawerListView.findViewById(R.id.project_list);
 

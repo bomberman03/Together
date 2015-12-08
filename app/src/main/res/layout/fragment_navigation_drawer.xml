@@ -17,32 +17,13 @@
             android:layout_height="wrap_content"
             android:text="PortFolio"
             android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/profile_image"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/default_profile"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="컴퓨터공학부"
-            android:id="@+id/department"
-            android:layout_gravity="center_horizontal" />
+            android:orientation="vertical"
+            android:id="@+id/profile_layout">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="정재현"
-            android:id="@+id/name"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,7 +79,8 @@
             android:text="새 프로젝트 +"
             android:id="@+id/new_project"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="15dp"
+            android:onClick="newProject"/>
 
         <LinearLayout
             android:orientation="horizontal"
