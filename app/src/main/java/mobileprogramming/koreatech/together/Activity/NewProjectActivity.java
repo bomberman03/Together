@@ -24,6 +24,7 @@ public class NewProjectActivity extends AppCompatActivity {
     private GregorianCalendar start_date;
     private GregorianCalendar end_date;
 
+    private TextView add_profile;
     private LinearLayout team_layout;
 
     @Override
@@ -38,9 +39,10 @@ public class NewProjectActivity extends AppCompatActivity {
 
         team_layout = (LinearLayout) findViewById(R.id.team_layout);
 
-        ProfileView profileView = new ProfileView(this, "컴퓨터공학부", "정재현", "");
-        team_layout.addView(profileView.getLayout(team_layout));
+        add_profile = (TextView) findViewById(R.id.add_profile);
     }
+
+
 
     private DatePickerDialog.OnDateSetListener endDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -80,5 +82,10 @@ public class NewProjectActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         new DatePickerDialog(this, endDateSetListener, year, month, day).show();
+    }
+
+    public void addProfile(View view){
+        ProfileView profileView = new ProfileView(this, "컴퓨터공학부","정재현","");
+        team_layout.addView(profileView.getSmallLayout(team_layout));
     }
 }

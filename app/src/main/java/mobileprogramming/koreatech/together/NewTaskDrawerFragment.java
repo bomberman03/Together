@@ -1,17 +1,16 @@
 package mobileprogramming.koreatech.together;
 
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,13 +18,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import mobileprogramming.koreatech.together.View.ProfileView;
 
@@ -34,7 +29,7 @@ import mobileprogramming.koreatech.together.View.ProfileView;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NewTaskDrawerFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -65,15 +60,9 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    private LinearLayout project_list;
-
-    public NavigationDrawerFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("TAG","onCreate");
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -88,7 +77,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("TAG", "onActivityCreated");
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
     }
@@ -96,29 +84,11 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("TAG","onCreateView" + container);
         mDrawerListView = (RelativeLayout) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
-
-        ProfileView profileView = new ProfileView(getContext(), "컴퓨터공학부", "정재현", "");
-
-        LinearLayout profile_layout = (LinearLayout) mDrawerListView.findViewById(R.id.profile_layout);
-
-        profile_layout.addView(profileView.getLayout(profile_layout));
-
-        project_list = (LinearLayout) mDrawerListView.findViewById(R.id.project_list);
-
-        String title_list[] = { "Mobile Project", "DBP Project", "HRD Project" };
-        for( String title : title_list ) {
-            LinearLayout res_layout = (LinearLayout) inflater.inflate(R.layout.project_button_layout, container, false);
-            TextView project_title =  (TextView) res_layout.findViewById(R.id.project_title);
-            project_title.setText(title);
-            project_list.addView(res_layout);
-        }
+                R.layout.fragment_new_task_drawer, container, false);
 
         return mDrawerListView;
     }
-
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
@@ -203,7 +173,7 @@ public class NavigationDrawerFragment extends Fragment {
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
+            //throw new ClassCastException("Activity must implement NavigationDrawerCallbacks." + activity.toString());
         }
     }
 
@@ -242,7 +212,6 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

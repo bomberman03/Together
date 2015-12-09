@@ -2,6 +2,7 @@ package mobileprogramming.koreatech.together.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -10,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +25,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import mobileprogramming.koreatech.together.Dialog.NotiDialog;
-import mobileprogramming.koreatech.together.Dialog.SignUpDialog;
+import mobileprogramming.koreatech.together.Dialog.TeamDialog;
 import mobileprogramming.koreatech.together.NavigationDrawerFragment;
 import mobileprogramming.koreatech.together.R;
 import mobileprogramming.koreatech.together.Utils2;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private NavigationDrawerFragment mNewTaskDrawerFragment;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -83,7 +86,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         frameLayout = (FrameLayout) findViewById(R.id.container);
         frameLayout.setBackgroundColor(Color.WHITE);
 
@@ -178,6 +180,30 @@ public class MainActivity extends AppCompatActivity
 
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void newProject(View view){
+        Intent intent = new Intent(this, NewProjectActivity.class);
+        startActivity(intent);
+    }
+
+    public void selectTeam(View view){
+        TeamDialog teamDialog = new TeamDialog(this,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "왼쪽버튼 Click!!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "오른쪽버튼 Click!!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+        teamDialog.show();
     }
 
     @Override
