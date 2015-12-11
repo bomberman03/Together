@@ -63,16 +63,21 @@ Why? 다른 팀원들이 서로의 능력과 무엇을 하고 있는지 파악�
 ### 6. 데이터베이스
 ---
 * USER
+
 ![USER](http://dl.dropbox.com/s/rj7rcmknllwm0l6/1.png)
 
 * PROJECT
+
 ![PROJECT](http://dl.dropbox.com/s/oq28ruwhvs7y209/2.png)
 
 * PROJECT_INFO
+
 ![PROJECT_INFO](http://dl.dropbox.com/s/heo6ks4tlv2dzdb/3.png)
 
 * TASK
+
 ![TASK](http://dl.dropbox.com/s/pd60k0jxa8uuxx9/4.png)
 
 * Comment
+
 ![Comment](http://dl.dropbox.com/s/7a38913jqrgzfzg/5.png)
