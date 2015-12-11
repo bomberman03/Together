@@ -81,3 +81,23 @@ Why? 다른 팀원들이 서로의 능력과 무엇을 하고 있는지 파악�
 * Comment
 
 ![Comment](http://dl.dropbox.com/s/7a38913jqrgzfzg/5.png)
+
+### 7. 상세설계(UML)
+---
+1. View & Request
+
+![View&Request](http://dl.dropbox.com/s/2j69qhwxqy7d7yi/00.png)
+
+비동기 통신을 위해서 AsyncTask를 상속받은 Request 를 정의하였다. Request 객체는 요청을 파라미터를 위한 Param객체와 응답 시에 처리할 Callback을 위한 Responsible 객체를 가진다. 프로젝트에서 필요한 Request는 이 Request 클래스를 상속받아서 구현된다. 
+
+2.	Models
+
+![Models](http://dl.dropbox.com/s/iklahc1f1l15pak/01.png)
+
+서버에 요청한 데이터는 데이터 객체로 관리된다. 한번 요청한 데이터는 로컬 데이터베이스에서 관리된다. 데이터베이스에 직접 접근 하지 않고 객체를 통해서 삽입, 갱신, 삭제를 처리한다.
+
+3. Managers & Configs & Utils
+
+![Managers & Configs & Utils](http://dl.dropbox.com/s/ou5fl6vxh18nxmo/02.png)
+
+서버의 응답으로 수신 받은 텍스트 데이터를 JSONObject 혹은 Model 객체로 parsing 해주는 Parser 객체가 존재한다. Network의 흐름을 관리하는 NetworkManager와 인증정보를 관리하는 AuthManager가 존재한다. 네트워크에 필요한 여러 정적 데이터가 모여있는 NetworkConfig 클래스가 존재한다.
