@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import mobileprogramming.koreatech.together.Data.UserData;
+import mobileprogramming.koreatech.together.Fragment.NewTaskDrawerFragment;
 import mobileprogramming.koreatech.together.R;
 import mobileprogramming.koreatech.together.View.ProfileView;
 
@@ -22,6 +24,8 @@ public class TeamDialog extends Dialog {
 
     private LinearLayout main_layout;
 
+    private NewTaskDrawerFragment newTaskDrawerFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,28 +38,31 @@ public class TeamDialog extends Dialog {
         setContentView(R.layout.team_dialog);
 
         init();
-        initListener();
     }
 
     public void init(){
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         main_layout = (LinearLayout) findViewById(R.id.team_layout);
 
-        for(int i=0; i<5; i++){
-            ProfileView profileView = new ProfileView(context, "컴퓨터공학부","정재현","");
-            main_layout.addView(profileView.getListLayout(main_layout));
+        for (UserData userData : newTaskDrawerFragment.getProjectData().users) {
+            ProfileView profileView = new ProfileView(context, userData);
+            LinearLayout profile_layout = profileView.getListLayout(main_layout);
+            profile_layout.setTag(userData);
+            profile_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UserData userData = (UserData) v.getTag();
+                    newTaskDrawerFragment.setUserData(userData);
+                    hide();
+                }
+            });
+            main_layout.addView(profile_layout);
         }
     }
 
-    public void initListener(){
-
-    }
-
-    public TeamDialog(Context context, View.OnClickListener leftListener , View.OnClickListener rightListener) {
+    public TeamDialog(Context context, NewTaskDrawerFragment newTaskDrawerFragment ) {
         super(context , android.R.style.Theme_Translucent_NoTitleBar);
         this.context = context;
-    }
-
-    public void signUpReqeust(){
+        this.newTaskDrawerFragment = newTaskDrawerFragment;
     }
 }

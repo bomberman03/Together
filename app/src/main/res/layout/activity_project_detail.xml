@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="mobileprogramming.koreatech.together.NewProjectActivity">
+    tools:context="mobileprogramming.koreatech.together.Activity.ProjectDetailActivity">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -29,16 +29,22 @@
                 android:layout_marginTop="10dp"
                 />
 
-            <EditText
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="30dp"
-                android:id="@+id/project_title"
-                android:layout_gravity="center_horizontal"
-                android:hint="프로젝트 이름을 입력하세요!"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_edit_text"
-                android:textSize="13dp"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="프로젝트 시작 일시"
+                    android:textSize="13dp"
+                    android:textColor="#333"
+                    android:id="@+id/project_title"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -53,17 +59,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/rounded_edit_text"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:layout_marginTop="5dp">
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="프로젝트 시작 일시"
+                    android:textSize="13dp"
+                    android:textColor="#333"
                     android:id="@+id/project_summary"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="프로젝트에 대한 간략한 설명을!"
-                    android:layout_marginTop="5dp"
-                    android:background="@null"
-                    android:textSize="13dp" />
+                    />
             </LinearLayout>
 
             <TextView
@@ -78,7 +84,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:text="터치하여 시작 날짜를 선택하세요"
                 android:id="@+id/project_start_date"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
@@ -103,8 +108,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/rounded_edit_text"
                 android:onClick="selectEndDate"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="터치하여 종료 날짜를 선택하세요" />
+                android:gravity="center_vertical|center_horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

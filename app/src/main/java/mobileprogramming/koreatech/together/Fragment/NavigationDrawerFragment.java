@@ -1,6 +1,6 @@
-package mobileprogramming.koreatech.together;
+package mobileprogramming.koreatech.together.Fragment;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -12,21 +12,21 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import mobileprogramming.koreatech.together.Activity.ProjectDetailActivity;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
+import mobileprogramming.koreatech.together.Data.ProjectData;
+import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.ProjectManager;
+import mobileprogramming.koreatech.together.R;
+import mobileprogramming.koreatech.together.Util.SimpleToast;
 import mobileprogramming.koreatech.together.View.ProfileView;
 
 /**
@@ -34,7 +34,7 @@ import mobileprogramming.koreatech.together.View.ProfileView;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements HttpUpdater {
 
     /**
      * Remember the position of the selected item.
@@ -67,13 +67,15 @@ public class NavigationDrawerFragment extends Fragment {
 
     private LinearLayout project_list;
 
+    private LayoutInflater layoutInflater;
+    private ViewGroup container;
+
     public NavigationDrawerFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("TAG","onCreate");
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -88,7 +90,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("TAG", "onActivityCreated");
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
     }
@@ -96,11 +97,10 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("TAG","onCreateView" + container);
         mDrawerListView = (RelativeLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
 
-        ProfileView profileView = new ProfileView(getContext(), "컴퓨터공학부", "정재현", "");
+        ProfileView profileView = new ProfileView(getContext(), AuthManager.getInstance().getUserData());
 
         LinearLayout profile_layout = (LinearLayout) mDrawerListView.findViewById(R.id.profile_layout);
 
@@ -108,19 +108,22 @@ public class NavigationDrawerFragment extends Fragment {
 
         project_list = (LinearLayout) mDrawerListView.findViewById(R.id.project_list);
 
-        String title_list[] = { "Mobile Project", "DBP Project", "HRD Project" };
-        for( String title : title_list ) {
-            LinearLayout res_layout = (LinearLayout) inflater.inflate(R.layout.project_button_layout, container, false);
-            TextView project_title =  (TextView) res_layout.findViewById(R.id.project_title);
-            project_title.setText(title);
-            project_list.addView(res_layout);
-        }
+        layoutInflater = inflater;
+        this.container = container;
 
         return mDrawerListView;
     }
 
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+    }
+
+    public void openDrawer(){
+        mDrawerLayout.openDrawer(mFragmentContainerView);
+    }
+
+    public void closeDrawer(){
+        mDrawerLayout.closeDrawer(mFragmentContainerView);
     }
 
     /**
@@ -146,7 +149,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
-                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
+                R.drawable.ic_reorder_white_48dp,             /* nav drawer image to replace 'Up' caret */
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {
@@ -156,7 +159,6 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
@@ -166,7 +168,6 @@ public class NavigationDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
                     // the navigation drawer automatically in the future.
@@ -175,7 +176,6 @@ public class NavigationDrawerFragment extends Fragment {
                             .getDefaultSharedPreferences(getActivity());
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
-
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
@@ -227,38 +227,40 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // If the drawer is open, show the global app actions in the action bar. See also
-        // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        if (mDrawerLayout != null && isDrawerOpen()) {
-            inflater.inflate(R.menu.global, menu);
-            showGlobalContextActionBar();
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Per the navigation drawer design guidelines, updates the action bar to show the global app
-     * 'context', rather than just what's in the current screen.
-     */
-    private void showGlobalContextActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
     }
 
     private ActionBar getActionBar() {
         return ((AppCompatActivity) getActivity()).getSupportActionBar();
+    }
+
+    @Override
+    public void httpUpdate(String response) {
+        project_list.removeAllViews();
+        for (final ProjectData projectData : ProjectManager.getInstance().getProjectDatas()){
+            LinearLayout res_layout = (LinearLayout) layoutInflater.inflate(R.layout.project_button_layout, container, false);
+            TextView project_title =  (TextView) res_layout.findViewById(R.id.project_title);
+            project_title.setText(projectData.name);
+            project_list.addView(res_layout);
+            res_layout.setTag(projectData);
+            res_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), ProjectDetailActivity.class);
+                    intent.putExtra("projectData", (ProjectData) v.getTag());
+                    startActivity(intent);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void httpError(String response) {
+        SimpleToast.getInstance().makeToast("뭔가 잘못됬어, 서버좀 확인해봐");
     }
 
     /**

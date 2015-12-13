@@ -32,7 +32,7 @@
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:text="업데이트 중입니다...(25%)"
+        android:text="잠시만 기다려 주세요..."
         android:textColor="@color/white"/>
 
 </RelativeLayout>

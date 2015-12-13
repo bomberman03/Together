@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10dp"
+        android:textColor="#000000"
         android:text="정재현"
         android:layout_gravity="center_horizontal"
         android:id="@+id/name"/>

@@ -6,7 +6,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="mobileprogramming.koreatech.together.Activity.IntroActivity"
-    android:background="@color/intro_bg">
+    android:background="@color/intro_bg"
+    android:onClick="onClick">
 
     <ImageView
         android:id="@+id/title_image"
@@ -15,7 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:background="@drawable/title"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:onClick="onClick"/>
 
     <ImageView
         android:layout_width="255dp"
@@ -24,28 +26,17 @@
         android:background="@drawable/main_image"
         android:layout_below="@id/title_image"
         android:layout_marginTop="25dp"
-        android:id="@+id/imageView" />
+        android:id="@+id/imageView"
+        android:onClick="onClick"/>
 
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:text="Sign In"
-        android:id="@+id/sign_in_button"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button"
-        android:textColor="@color/white"/>
-
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:text="Sign Up"
-        android:id="@+id/sign_up_button"
-        android:layout_below="@+id/sign_in_button"
-        android:layout_alignStart="@+id/sign_in_button"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button"
-        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/white"
+        android:id="@+id/message"
+        android:onClick="onClick"/>
 
 </RelativeLayout>

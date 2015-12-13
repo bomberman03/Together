@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import mobileprogramming.koreatech.together.Data.UserData;
 import mobileprogramming.koreatech.together.R;
 
 /**
@@ -30,11 +31,12 @@ public class ProfileView {
 
     public LayoutInflater layoutInflater;
 
-    public ProfileView(Context context, String department, String name, String image_url){
+    public ProfileView(Context context, UserData userData){
         this.context = context;
-        this.department = department;
-        this.name = name;
-        this.image_url = image_url;
+
+        this.department = userData.department_name;
+        this.name = userData.name;
+        this.image_url = "";
 
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -65,7 +67,6 @@ public class ProfileView {
             Bitmap bitmap = getBitmapFromURL(this.image_url);
             profile.setImageBitmap(bitmap);
         }
-
 
         department.setText(this.department);
         name.setText(this.name);
@@ -101,9 +102,7 @@ public class ProfileView {
             profile.setImageBitmap(bitmap);
         }
 
-        Log.d("TAG", "department : " + this.department);
-
-        //department.setText(this.department);
+        department.setText(this.department);
         name.setText(this.name);
 
         return res_layout;

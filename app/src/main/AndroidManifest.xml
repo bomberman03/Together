@@ -2,11 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mobileprogramming.koreatech.together" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -32,8 +34,7 @@
         </activity>
         <activity
             android:name=".Activity.ProjectDetailActivity"
-            android:label="@string/title_activity_project_detail"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/title_activity_project_detail">
         </activity>
         <activity android:name=".Activity.TeamSearchActivity" >
         </activity>

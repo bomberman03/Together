@@ -1,6 +1,7 @@
-package mobileprogramming.koreatech.together;
+package mobileprogramming.koreatech.together.Fragment;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,18 +19,34 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import mobileprogramming.koreatech.together.Data.ProjectData;
+import mobileprogramming.koreatech.together.Data.TaskData;
+import mobileprogramming.koreatech.together.Data.UserData;
+import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.R;
+import mobileprogramming.koreatech.together.Request.InsertTaskRequest;
+import mobileprogramming.koreatech.together.Util.SimpleToast;
 import mobileprogramming.koreatech.together.View.ProfileView;
+import mobileprogramming.koreatech.together.View.ProjectView;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NewTaskDrawerFragment extends Fragment {
+public class NewTaskDrawerFragment extends Fragment implements HttpUpdater {
 
     /**
      * Remember the position of the selected item.
@@ -60,6 +77,16 @@ public class NewTaskDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private EditText task_title;
+    private TextView task_end_date;
+    private TextView user_text;
+    private EditText task_summary;
+
+    private ProjectData selectedProject;
+    private UserData userData;
+
+    private ProjectView selectedProjectView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,16 +108,104 @@ public class NewTaskDrawerFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    private DatePickerDialog.OnDateSetListener endDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            String msg = String.format("%d-%d-%d", year,monthOfYear+1, dayOfMonth);
+
+            TextView task_end_date = (TextView) mDrawerListView.findViewById(R.id.task_end_date);
+            task_end_date.setText(msg);
+        }
+    };
+
+    public void selectEndDate(View view){
+        GregorianCalendar calendar = new GregorianCalendar();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(getContext(), endDateSetListener, year, month, day).show();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDrawerListView = (RelativeLayout) inflater.inflate(
                 R.layout.fragment_new_task_drawer, container, false);
 
+        task_end_date = (TextView) mDrawerListView.findViewById(R.id.task_end_date);
+        task_end_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectEndDate(v);
+            }
+        });
+
+        TextView cancel_button = (TextView) mDrawerListView.findViewById(R.id.cancel_button);
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawer(mFragmentContainerView);
+            }
+        });
+
+        TextView submit_button = (TextView) mDrawerListView.findViewById(R.id.submit_button);
+        submit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertTaskRequest();
+            }
+        });
+
+        task_title = (EditText) mDrawerListView.findViewById(R.id.task_title);
+        task_summary = (EditText) mDrawerListView.findViewById(R.id.task_summary);
+        user_text = (TextView) mDrawerListView.findViewById(R.id.team);
+
         return mDrawerListView;
     }
+
+    public void insertTaskRequest(){
+        TaskData taskData = extractTaskData();
+        InsertTaskRequest insertTaskRequest = new InsertTaskRequest(this, taskData);
+        insertTaskRequest.execute();
+    }
+
+    public TaskData extractTaskData(){
+        String name = task_title.getText().toString();
+        String summary = task_summary.getText().toString();
+        String end_date = task_end_date.getText().toString();
+        TaskData taskData = new TaskData(selectedProject, userData, name, summary, end_date);
+        return taskData;
+    }
+
+    public ProjectData getProjectData(){
+        return selectedProject;
+    }
+
+    public void setUserData(UserData userData){
+        this.userData = userData;
+        user_text.setText(userData.name);
+    }
+
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+    }
+
+    public void openDrawer(ProjectData projectData, ProjectView projectView){
+        mDrawerLayout.openDrawer(mFragmentContainerView);
+        this.selectedProject = projectData;
+        this.selectedProjectView = projectView;
+
+        task_title.setText("");
+        task_summary.setText("");
+        task_end_date.setText("만료일을 입력하세요");
+        user_text.setText("팀원을 선택하세요");
+    }
+
+    public void closeDrawer(){
+        mDrawerLayout.closeDrawer(mFragmentContainerView);
     }
 
     /**
@@ -102,6 +217,7 @@ public class NewTaskDrawerFragment extends Fragment {
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -116,7 +232,7 @@ public class NewTaskDrawerFragment extends Fragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
-                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
+                R.drawable.ic_reorder_white_48dp,             /* nav drawer image to replace 'Up' caret */
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {
@@ -126,7 +242,6 @@ public class NewTaskDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
@@ -136,7 +251,6 @@ public class NewTaskDrawerFragment extends Fragment {
                 if (!isAdded()) {
                     return;
                 }
-
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
                     // the navigation drawer automatically in the future.
@@ -145,7 +259,6 @@ public class NewTaskDrawerFragment extends Fragment {
                             .getDefaultSharedPreferences(getActivity());
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
-
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
@@ -197,37 +310,27 @@ public class NewTaskDrawerFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // If the drawer is open, show the global app actions in the action bar. See also
-        // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        if (mDrawerLayout != null && isDrawerOpen()) {
-            inflater.inflate(R.menu.global, menu);
-            showGlobalContextActionBar();
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Per the navigation drawer design guidelines, updates the action bar to show the global app
-     * 'context', rather than just what's in the current screen.
-     */
-    private void showGlobalContextActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
-    }
-
     private ActionBar getActionBar() {
         return ((AppCompatActivity) getActivity()).getSupportActionBar();
+    }
+
+    @Override
+    public void httpUpdate(String response) {
+        SimpleToast.getInstance().makeToast("테스크 등록이 성공적으로 이루어졌습니다.");
+        closeDrawer();
+        selectedProjectView.requestTaskList();
+    }
+
+    @Override
+    public void httpError(String response) {
+        SimpleToast.getInstance().makeToast("뭔가 잘못됬어, 서버좀 확인해봐");
     }
 
     /**

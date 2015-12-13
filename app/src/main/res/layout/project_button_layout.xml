@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
         android:text="전부 보기"
         android:id="@+id/project_title"
         android:layout_marginBottom="5dp"
