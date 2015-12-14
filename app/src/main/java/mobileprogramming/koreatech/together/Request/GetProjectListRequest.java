@@ -11,13 +11,14 @@ import org.apache.http.util.EntityUtils;
 
 import mobileprogramming.koreatech.together.Data.UserData;
 import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
 
 /**
  * Created by user on 2015-12-12.
  */
 public class GetProjectListRequest extends AsyncTask<Void, Void, String> {
 
-    private String URL = "http://1.214.224.33:8080/api-auth/nest/projects/?users=";
+    private String URL = AuthManager.getInstance().URI + "api-auth/nest/projects/?users=";
     private HttpUpdater httpUpdater;
     private UserData userData;
     private int statusCode;

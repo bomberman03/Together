@@ -16,13 +16,14 @@ import java.util.ArrayList;
 
 import mobileprogramming.koreatech.together.Data.TaskData;
 import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
 
 /**
  * Created by user on 2015-12-12.
  */
 public class InsertTaskRequest extends AsyncTask<Void, Void, String> {
 
-    private String URL = "http://1.214.224.33:8080/api-auth/tasks/";
+    private String URL = AuthManager.getInstance().URI + "api-auth/tasks/";
     private HttpUpdater httpUpdater;
     private TaskData taskData;
     private int statusCode;

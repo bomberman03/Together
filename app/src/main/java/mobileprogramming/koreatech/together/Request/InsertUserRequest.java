@@ -16,13 +16,14 @@ import java.util.ArrayList;
 
 import mobileprogramming.koreatech.together.Data.UserData;
 import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
 
 /**
  * Created by user on 2015-12-10.
  */
 public class InsertUserRequest extends AsyncTask<Void, Void, String> {
 
-    private String URL = "http://1.214.224.33:8080/api-auth/users/";
+    private String URL = AuthManager.getInstance().URI + "api-auth/users/";
     private HttpUpdater httpUpdater;
     private UserData userData;
     private int statusCode;

@@ -16,13 +16,14 @@ import java.util.ArrayList;
 
 import mobileprogramming.koreatech.together.Data.FeedData;
 import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
 
 /**
  * Created by user on 2015-12-13.
  */
 public class InsertFeedRequest  extends AsyncTask<Void, Void, String> {
 
-    private String URL = "http://1.214.224.33:8080/api-auth/feeds/";
+    private String URL = AuthManager.getInstance().URI + "api-auth/feeds/";
     private HttpUpdater httpUpdater;
     private FeedData feedData;
     private int statusCode;

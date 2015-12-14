@@ -10,6 +10,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +23,8 @@ import mobileprogramming.koreatech.together.R;
 import mobileprogramming.koreatech.together.Util.SimpleToast;
 
 public class IntroActivity extends Activity implements HttpUpdater{
+
+    private IntroActivity introActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +57,27 @@ public class IntroActivity extends Activity implements HttpUpdater{
             dialog.show();    // 알림창 띄우기
         }
         else {
-            TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            AuthManager.getInstance().setPhoneNumber(tMgr.getLine1Number());
-            AuthManager.getInstance().requestLogin(this);
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("테스팅 서버 IP 입력");
+            alert.setMessage("서버의 IP를 입력하세요");
+            final EditText input = new EditText(this);
+            alert.setView(input);
+            alert.setPositiveButton("입력", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    String value = input.getText().toString();
+                    AuthManager.getInstance().URI = "http://" + value + ":8080/";
+                    TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    AuthManager.getInstance().setPhoneNumber(tMgr.getLine1Number());
+                    AuthManager.getInstance().requestLogin(introActivity);
+                }
+            });
+            alert.setNegativeButton("종료",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }
+                    });
+            alert.show();
         }
     }
 

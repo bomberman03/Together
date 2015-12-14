@@ -18,6 +18,8 @@ public class AuthManager implements HttpUpdater {
     private UserData userData;
     private HttpUpdater httpUpdater;
 
+    public String URI = "http://1.214.224.68:8080/";
+
     public void setPhoneNumber(String phone_number){
         this.phoneNumber = phone_number;
     }

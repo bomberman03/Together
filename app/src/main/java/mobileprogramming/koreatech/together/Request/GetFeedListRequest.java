@@ -12,13 +12,14 @@ import org.apache.http.util.EntityUtils;
 import mobileprogramming.koreatech.together.Data.ProjectData;
 import mobileprogramming.koreatech.together.Data.TaskData;
 import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
 
 /**
  * Created by user on 2015-12-13.
  */
 public class GetFeedListRequest extends AsyncTask<Void, Void, String> {
 
-    private String URL = "http://1.214.224.33:8080/api-auth/feeds/?task=";
+    private String URL = AuthManager.getInstance().URI +  "api-auth/feeds/?task=";
     private HttpUpdater httpUpdater;
     private TaskData taskData;
     private int statusCode;

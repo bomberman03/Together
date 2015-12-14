@@ -14,13 +14,14 @@ import java.util.ArrayList;
 import mobileprogramming.koreatech.together.Data.ProjectData;
 import mobileprogramming.koreatech.together.Data.UserData;
 import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
 
 /**
  * Created by user on 2015-12-12.
  */
 public class InsertProjectRequest extends AsyncTask<Void, Void, String> {
 
-    private String URL = "http://1.214.224.33:8080/api-auth/projects/";
+    private String URL = AuthManager.getInstance().URI + "api-auth/projects/";
     private HttpUpdater httpUpdater;
     private ProjectData projectData;
     private int statusCode;

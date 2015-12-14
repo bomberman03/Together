@@ -11,13 +11,14 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import mobileprogramming.koreatech.together.HttpUpdater;
+import mobileprogramming.koreatech.together.Manager.AuthManager;
 
 /**
  * Created by user on 2015-12-10.
  */
 public class GetUserListRequest extends AsyncTask<Void, Void, String> {
 
-    private String URL = "http://1.214.224.33:8080/api-auth/users/?search=";
+    private String URL = AuthManager.getInstance().URI + "api-auth/users/?search=";
     private HttpUpdater httpUpdater;
     private String search;
     private int statusCode;
